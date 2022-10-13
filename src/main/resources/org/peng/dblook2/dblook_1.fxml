@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.peng.dblook2.Dblook1Controller">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="600">
+        <items>
+          <Button mnemonicParsing="false" text="执行" onAction="#b_execute" />
+        </items>
+      </ToolBar>
+      <SplitPane fx:id="s_pane" dividerPositions="0.5" layoutY="40.0" orientation="VERTICAL" prefHeight="560.0" prefWidth="600.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TextArea prefHeight="276.0" prefWidth="600.0" />
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TableView fx:id="table1" prefHeight="276.0" prefWidth="600.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="name1" />
+                      <TableColumn prefWidth="75.0" text="name2" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
