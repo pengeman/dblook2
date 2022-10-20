@@ -18,10 +18,14 @@ public class Dblook1Controller implements Initializable {
 
     @FXML
     public ToolBar toolBar;
-    @FXML public Button b_doSQL;
-    @FXML public TextArea t_sql;
-    @FXML public AnchorPane pane,spane1,spane2;
-    @FXML public SplitPane s_pane;
+    @FXML
+    public Button b_doSQL;
+    @FXML
+    public TextArea t_sql;
+    @FXML
+    public AnchorPane pane, spane1, spane2;
+    @FXML
+    public SplitPane s_pane;
     @FXML
     TableView table1;
 
@@ -61,9 +65,11 @@ public class Dblook1Controller implements Initializable {
         this.s_pane.getDividers().get(0).positionProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldv, Number newv) {
-                System.out.println(oldv + "   --   " + newv);
-                var height = s_pane.getPrefHeight();
-                table1.setPrefHeight(height - height * ((double) newv ) - 40);
+                //System.out.println(oldv + "   --   " + newv);
+                double height = s_pane.getPrefHeight();
+                t_sql.setPrefHeight(height * ((double) newv) );
+                table1.setPrefHeight(height - height * ((double) newv) - 40);
+
             }
         });
 
