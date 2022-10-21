@@ -3,11 +3,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.peng.dblook2.Dblook1Controller">
+<AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.peng.dblook2.Dblook1Controller" onZoomStarted="#zoomStarted" >
    <children>
       <ToolBar fx:id="toolBar" prefHeight="40.0" prefWidth="600">
         <items>
-          <Button fx:id="b_doSQL" mnemonicParsing="false" text="执行" onAction="#b_execute" />
+            <Button fx:id="b_lookforjdbc" mnemonicParsing="false" onAction="#b_lookforjdbc" text="链接数据库" />
+          <Button fx:id="b_doSQL" mnemonicParsing="false" onAction="#b_execute" text="执行"  />
+            <Button fx:id="b_book" onAction="#b_book" text="记事本" />
         </items>
       </ToolBar>
       <SplitPane fx:id="s_pane" dividerPositions="0.5" layoutY="40.0" orientation="VERTICAL" prefHeight="560.0" prefWidth="600.0">
@@ -18,7 +20,7 @@
                </children></AnchorPane>
           <AnchorPane fx:id="spane2" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <TableView  fx:id="table1" prefHeight="276.0" prefWidth="600.0">
+                  <TableView fx:id="table1" prefHeight="276.0" prefWidth="600.0">
                     <columns>
                       <TableColumn prefWidth="75.0" text="name1" />
                       <TableColumn prefWidth="75.0" text="name2" />
