@@ -1,18 +1,30 @@
 package org.peng.dblook2;
 
+import dbhelp.DataSet;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.SetChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import static javafx.scene.input.KeyCode.F5;
@@ -24,7 +36,7 @@ public class Dblook1Controller implements Initializable {
     @FXML
     public Button b_doSQL;
     @FXML
-    public TextArea t_sql;
+    public TextArea t_sql,t_d;
     @FXML
     public AnchorPane pane;
     @FXML  AnchorPane spane1, spane2;
@@ -78,29 +90,47 @@ public class Dblook1Controller implements Initializable {
 
             }
         });
-
-        TableColumn name1 = new TableColumn("name1");
-        name1.setCellValueFactory(new PropertyValueFactory<>("name1"));
-
-        TableColumn name2 = new TableColumn("name2");
-        name2.setCellValueFactory(new PropertyValueFactory<>("name2"));
-
-        table1.getColumns().clear();
-        table1.getColumns().addAll(name1, name2);
     }
 
     @FXML public void b_lookforjdbc(ActionEvent actionEvent) {
-        // todo 选择链接字符串，链接数据库
+        // todo 选择数据源，链接数据库
+        Parent root = null;
+        javafx.stage.Stage dbsourceStage =  new Stage();
 
+        URL url = this.getClass().getResource("dbsource.fxml");
+        try {
+            root = FXMLLoader.load(url);
+        dbsourceStage.setTitle("选择数据源");
+        dbsourceStage.setScene(new Scene(root));
+        dbsourceStage.initModality(Modality.WINDOW_MODAL);
+        dbsourceStage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     @FXML
     public void b_execute(ActionEvent actionEvent) {
         // todo 执行sql语句
-        /* 新增1行*/
-        Person per = new Person();
-        per.setName1("1111").setName2("2222");
+        String t_sql = this.t_sql.getSelectedText();
+        if (t_sql == null || t_sql.isEmpty()) {
+            String msg = "sql语句没有发现";
+            showText(msg);
+            return;
+        }
+        System.out.println(t_sql);
 
-        this.table1.getItems().addAll(per);
+        Common.dataBase.
+        DataSet ds = Common.dataBase.query(t_sql);
+        Common.dataBase.cl
+        List dsls = ds.generateList();
+
+        // 显示到table里
+        showtable(ds);
+
+
+
+        // 分析sql语句,非阻塞
+        this.explain(t_sql);
 
     }
 
@@ -110,6 +140,49 @@ public class Dblook1Controller implements Initializable {
                 KeyCombination kc = new KeyCodeCombination(KeyCode.F5);
         Mnemonic mnemonic = new Mnemonic(b_doSQL,kc);
         this.pane.getScene().addMnemonic(mnemonic);
+    }
+
+    private void showText(String msg){
+        // todo 在textView中现实信息
+        this.t_d.setText(msg);
+        this.t_d.setVisible(true);
+        this.table1.setVisible(false);
+    }
+
+    /**
+     * todo 将dataset数据显示到table里
+     *
+     * @return
+     */
+    private void showtable(DataSet ds) {
+        ObservableList<Map> data = FXCollections.observableArrayList();
+
+        TableColumn t_col[];
+        List<String> colNames = ds.getColNameSet();
+        t_col = new TableColumn[colNames.size()];
+        for (int i = 0; i < t_col.length; i++) {
+            String colName = colNames.get(i);
+            t_col[i] = new TableColumn(colName);
+            t_col[i].setCellValueFactory(new MapValueFactory<String>(colName));
+        }
+
+        // 将ds中的数据写入ObservableList
+        List<Map<String, Object>> rss = ds.getDataTable(); // 源头
+        for (int i = 0; i < rss.size(); i++) {
+            data.add(rss.get(i));
+        }
+
+        this.table1.getColumns().addAll(t_col);
+        this.table1.setItems(data);
+        this.table1.setVisible(true);
+        this.t_d.setVisible(false);
+
+
+    }
+
+    // sql语句分析
+    private void explain(String sql){
+        // 使用explain分析mysql的语句，结果显示在
     }
 
     public void zoomStarted(ZoomEvent zoomEvent) {

@@ -19,7 +19,8 @@ import java.util.*;
 
 public class DataBase {
     private DBConnection DBConnection;
-
+    private PreparedStatement statement;
+    private Connection conn;
 
     /**
      * 正在链接的数据库的名称
@@ -80,25 +81,25 @@ public class DataBase {
     public DataSet query(String sql) {
         DataSet dataSet = new DataSet();
         boolean hasmore = true;
-        Connection conn = null;
-        PreparedStatement stat = null;
+//        Connection conn = null;
+//        PreparedStatement stat = null;
         ResultSet rs = null;
 
 
         //dbhelpx.DataSet ds = null;
         try {
             conn = this.DBConnection.getSqlConnection();
-            stat = conn.prepareStatement(sql);
+            statement = conn.prepareStatement(sql);
 
-            hasmore = stat.execute();
+            hasmore = statement.execute();
             if (hasmore) {
-                rs = stat.getResultSet();
+                rs = statement.getResultSet();
                 // 便利rs,取得数据,生成DataSet
                 List<Map<String, Object>> dtable = this.fetchResultSet(rs);
                 dataSet.setDataTable(dtable);
                 return dataSet;
             } else {
-                int i = stat.getUpdateCount();
+                int i = statement.getUpdateCount();
                 dataSet = null;
             }
 
@@ -106,9 +107,16 @@ public class DataBase {
             e.printStackTrace();
             dataSet = null;
         } finally {
-            close(stat, conn);
+            //close(stat, conn);
         }
         return dataSet;
+    }
+
+    /**
+     * 关闭数据库，释放链接
+     */
+    public void close() {
+        this.close(statement, conn);
     }
 
     /**

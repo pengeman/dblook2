@@ -134,6 +134,7 @@ public class DbsourceController implements Initializable {
         dbhelp.DataBase dataBase = con.createDatabase();
 
         Common.dataBase = dataBase;
+
         Stage stage = (Stage) this.b_confirm.getScene().getWindow();
         stage.close();
     }

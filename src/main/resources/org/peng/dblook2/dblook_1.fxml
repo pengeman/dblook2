@@ -20,11 +20,9 @@
                </children></AnchorPane>
           <AnchorPane fx:id="spane2" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
+                   <TextArea fx:id="t_d" prefHeight="276.0" prefWidth="600.0" />
                   <TableView fx:id="table1" prefHeight="276.0" prefWidth="600.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="name1" />
-                      <TableColumn prefWidth="75.0" text="name2" />
-                    </columns>
+
                   </TableView>
                </children></AnchorPane>
         </items>
