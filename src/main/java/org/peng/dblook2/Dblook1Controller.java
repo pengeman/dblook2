@@ -135,10 +135,11 @@ public class Dblook1Controller implements Initializable {
 
     public void b_book(ActionEvent actionEvent) {
         // todo 打开记事本，用于记录一些知识点
-        System.out.println(" b_book ...咨询");
-                KeyCombination kc = new KeyCodeCombination(KeyCode.F5);
-        Mnemonic mnemonic = new Mnemonic(b_doSQL,kc);
-        this.pane.getScene().addMnemonic(mnemonic);
+
+        NoteDia.main();
+//                KeyCombination kc = new KeyCodeCombination(KeyCode.F5);
+//        Mnemonic mnemonic = new Mnemonic(b_doSQL,kc);
+//        this.pane.getScene().addMnemonic(mnemonic);
     }
 
     private void showText(String msg){
@@ -171,6 +172,8 @@ public class Dblook1Controller implements Initializable {
             data.add(rss.get(i));
         }
 
+        this.table1.getItems().clear();
+        this.table1.getColumns().clear();
         this.table1.getColumns().addAll(t_col);
         this.table1.setItems(data);
         this.table1.setVisible(true);
