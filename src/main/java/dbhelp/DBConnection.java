@@ -6,6 +6,9 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
@@ -101,6 +104,21 @@ public class DBConnection {
         }
         return con;
     }
+
+    /**
+     * 关闭与数据库的链接
+     */
+    public void close(){
+        this.close(this.getSqlConnection());
+    }
+    private void close(Connection conn) {
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public DataBase createDatabase() {
         DataBase dataBase = new DataBase(this.useName, this.url, this);

@@ -112,22 +112,7 @@ public class DataBase {
         return dataSet;
     }
 
-    /**
-     * 关闭数据库，释放链接
-     */
-    public void close() {
-        this.close(statement, conn);
-    }
 
-    /**
-     * 释放连接
-     *
-     * @param stat
-     * @param conn
-     */
-    private void close(PreparedStatement stat, Connection conn) {
-        close(null, stat, conn);
-    }
 
     /**
      * 释放连接

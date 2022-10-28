@@ -119,10 +119,9 @@ public class Dblook1Controller implements Initializable {
         }
         System.out.println(t_sql);
 
-        Common.dataBase.
         DataSet ds = Common.dataBase.query(t_sql);
-        Common.dataBase.cl
-        List dsls = ds.generateList();
+
+        //List dsls = ds.generateList();
 
         // 显示到table里
         showtable(ds);
