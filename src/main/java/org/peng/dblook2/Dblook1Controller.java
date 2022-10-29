@@ -36,19 +36,20 @@ public class Dblook1Controller implements Initializable {
     @FXML
     public Button b_doSQL;
     @FXML
-    public TextArea t_sql,t_d;
+    public TextArea t_sql, t_d;
     @FXML
     public AnchorPane pane;
-    @FXML  AnchorPane spane1, spane2;
+    @FXML
+    AnchorPane spane1, spane2;
     @FXML
     public SplitPane s_pane;
     @FXML
     TableView table1;
 
 
-
     @Override
-@FXML    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         // todo dblook主界面初始化
         this.pane.setPrefWidth(800);
         this.pane.setPrefHeight(600);
@@ -62,7 +63,6 @@ public class Dblook1Controller implements Initializable {
 //        KeyCombination kc = new KeyCodeCombination(KeyCode.F5);
 //        Mnemonic mnemonic = new Mnemonic(b_doSQL,kc);
 //        this.pane.getScene().addMnemonic(mnemonic);
-
 
 
         // todo 设置事件动作
@@ -85,29 +85,31 @@ public class Dblook1Controller implements Initializable {
             public void changed(ObservableValue<? extends Number> observableValue, Number oldv, Number newv) {
                 //System.out.println(oldv + "   --   " + newv);
                 double height = s_pane.getPrefHeight();
-                t_sql.setPrefHeight(height * ((double) newv) );
+                t_sql.setPrefHeight(height * ((double) newv));
                 table1.setPrefHeight(height - height * ((double) newv) - 40);
 
             }
         });
     }
 
-    @FXML public void b_lookforjdbc(ActionEvent actionEvent) {
+    @FXML
+    public void b_lookforjdbc(ActionEvent actionEvent) {
         // todo 选择数据源，链接数据库
         Parent root = null;
-        javafx.stage.Stage dbsourceStage =  new Stage();
+        javafx.stage.Stage dbsourceStage = new Stage();
 
         URL url = this.getClass().getResource("dbsource.fxml");
         try {
             root = FXMLLoader.load(url);
-        dbsourceStage.setTitle("选择数据源");
-        dbsourceStage.setScene(new Scene(root));
-        dbsourceStage.initModality(Modality.WINDOW_MODAL);
-        dbsourceStage.show();
+            dbsourceStage.setTitle("选择数据源");
+            dbsourceStage.setScene(new Scene(root));
+            dbsourceStage.initModality(Modality.WINDOW_MODAL);
+            dbsourceStage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     public void b_execute(ActionEvent actionEvent) {
         // todo 执行sql语句
@@ -117,15 +119,24 @@ public class Dblook1Controller implements Initializable {
             showText(msg);
             return;
         }
-        System.out.println(t_sql);
+        t_sql = t_sql.trim();
+        String first_sql = t_sql.substring(0,6);
+        if (first_sql.substring(0, 6).equals("select")) {// 是select语句
+            DataSet ds = Common.dataBase.query(t_sql);
+            //List dsls = ds.generateList();
+            // 显示到table里
+            showtable(ds);
+        }
 
-        DataSet ds = Common.dataBase.query(t_sql);
+        // 执行DDL语句
+        if (first_sql.equals("insert") || first_sql.equals("update") || first_sql.equals("delete")){
+            int r = Common.dataBase.execute(t_sql);
+            showText("执行完成，影响了" + r + "条语句");
+        }
 
-        //List dsls = ds.generateList();
-
-        // 显示到table里
-        showtable(ds);
-
+        // 执行DML语句
+        Common.dataBase.execute(t_sql);
+        showText("执行完成");
 
 
         // 分析sql语句,非阻塞
@@ -142,7 +153,7 @@ public class Dblook1Controller implements Initializable {
 //        this.pane.getScene().addMnemonic(mnemonic);
     }
 
-    private void showText(String msg){
+    private void showText(String msg) {
         // todo 在textView中现实信息
         this.t_d.setText(msg);
         this.t_d.setVisible(true);
@@ -183,7 +194,7 @@ public class Dblook1Controller implements Initializable {
     }
 
     // sql语句分析
-    private void explain(String sql){
+    private void explain(String sql) {
         // 使用explain分析mysql的语句，结果显示在
     }
 

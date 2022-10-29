@@ -42,6 +42,18 @@ public class DataBase {
         this.DBConnection = con;
     }
 
+    public int execute(String sql){
+        // todo 执行DDL,DML
+        Connection  connection = this.DBConnection.getSqlConnection();
+        try {
+            PreparedStatement preparedStatement =  connection.prepareStatement(sql);
+            int r = preparedStatement.executeUpdate();
+            return r;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 
     /**
      * 执行insert语句
@@ -99,7 +111,7 @@ public class DataBase {
                 dataSet.setDataTable(dtable);
                 return dataSet;
             } else {
-                int i = statement.getUpdateCount();
+                //int i = statement.getUpdateCount();
                 dataSet = null;
             }
 
