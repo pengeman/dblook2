@@ -3,12 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.peng.dblook2.Dblook1Controller" onZoomStarted="#zoomStarted" >
+<AnchorPane fx:id="pane" onZoomStarted="#zoomStarted" prefHeight="800.0" prefWidth="1188.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.peng.dblook2.Dblook1Controller">
    <children>
       <ToolBar fx:id="toolBar" prefHeight="40.0" prefWidth="600">
         <items>
             <Button fx:id="b_lookforjdbc" mnemonicParsing="false" onAction="#b_lookforjdbc" text="链接数据库" />
-          <Button fx:id="b_doSQL" mnemonicParsing="false" onAction="#b_execute" text="执行"  />
+          <Button fx:id="b_doSQL" mnemonicParsing="false" onAction="#b_execute" text="执行" />
             <Button fx:id="b_book" onAction="#b_book" text="记事本" />
         </items>
       </ToolBar>
