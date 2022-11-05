@@ -140,8 +140,10 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.peng.dblook.DBhome</mainClass>
+                            <mainClass>org.peng.dblook2.HelloApplication</mainClass>
+                            <addClasspath>true</addClasspath>
                         </manifest>
+
                     </archive>
                 </configuration>
             </plugin>
@@ -167,8 +169,8 @@
             <!--                    </descriptorRefs>-->
             <!--                </configuration>-->
             <!--            </plugin>-->
-        </plugins>
-    </build>
+<!--        </plugins>-->
+<!--    </build>-->
 
     <!--    <build>-->
     <!--        <plugins>-->
@@ -216,49 +218,50 @@
     <!--            </plugin>-->
 
     <!--            2、将所有依赖的jar文件复制到target/lib目录 &ndash;&gt;-->
-    <!--            <plugin>-->
-    <!--                <groupId>org.apache.maven.plugins</groupId>-->
-    <!--                <artifactId>maven-dependency-plugin</artifactId>-->
-    <!--                <version>${apache.maven.plugins.version}</version>-->
-    <!--                <executions>-->
-    <!--                    <execution>-->
-    <!--                        <id>copy-dependencies</id>-->
-    <!--                        <phase>prepare-package</phase>-->
-    <!--                        <goals>-->
-    <!--                            <goal>copy-dependencies</goal>-->
-    <!--                        </goals>-->
-    <!--                        <configuration>-->
-    <!--                            &lt;!&ndash;复制到哪个路径，${project.build.directory} 缺醒为 target，其他内置参数见下面解释&ndash;&gt;-->
-    <!--                            <outputDirectory>${project.build.directory}/lib</outputDirectory>-->
-    <!--                            &lt;!&ndash;todo 研究下这些参数的作用 &ndash;&gt;-->
-    <!--                            <overWriteReleases>true</overWriteReleases>-->
-    <!--                            <overWriteSnapshots>true</overWriteSnapshots>-->
-    <!--                            <overWriteIfNewer>true</overWriteIfNewer>-->
-    <!--                            &lt;!&ndash; 不要打入 &ndash;&gt;-->
-    <!--                            <excludeArtifactIds>insight-resources</excludeArtifactIds>-->
-    <!--                            <excludeScope>test</excludeScope>-->
-    <!--                            <excludeScope>provided</excludeScope>-->
-    <!--                        </configuration>-->
-    <!--                    </execution>-->
-    <!--                </executions>-->
-    <!--            </plugin>-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <executions>
+                        <execution>
+                            <id>copy-dependencies</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                            <configuration>
+                                <!--复制到哪个路径，${project.build.directory} 缺醒为 target，其他内置参数见下面解释-->
+                                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                                <!--todo 研究下这些参数的作用 -->
+                                <overWriteReleases>true</overWriteReleases>
+                                <overWriteSnapshots>true</overWriteSnapshots>
+                                <overWriteIfNewer>true</overWriteIfNewer>
+                                <!-- 不要打入 -->
+                                <excludeArtifactIds>insight-resources</excludeArtifactIds>
+                                <excludeScope>test</excludeScope>
+                                <excludeScope>provided</excludeScope>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
 
     <!--            3、指定启动类，指定配置文件，将依赖打成外部jar包 &ndash;&gt;-->
-    <!--            <plugin>-->
-    <!--                <groupId>org.apache.maven.plugins</groupId>-->
-    <!--                <artifactId>maven-jar-plugin</artifactId>-->
-    <!--                <version>3.2.0</version>-->
-    <!--                <configuration>-->
-    <!--                    &lt;!&ndash;资源文件不打进jar包中，做到配置跟项目分离的效果&ndash;&gt;-->
-    <!--                    <excludes>-->
-    <!--                        &lt;!&ndash; 业务jar中过滤application.properties/yml文件，在jar包外控制 &ndash;&gt;-->
-    <!--                        <exclude>*.properties</exclude>-->
-    <!--                        <exclude>*.xml</exclude>-->
-    <!--                        <exclude>*.yml</exclude>-->
-    <!--                    </excludes>-->
-    <!--                </configuration>-->
-    <!--            </plugin>-->
-    <!--        </plugins>-->
-    <!--    </build>-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <configuration>
+                        <!--资源文件不打进jar包中，做到配置跟项目分离的效果-->
+                        <excludes>
+                            <!-- 业务jar中过滤application.properties/yml文件，在jar包外控制 -->
+                            <exclude>*.properties</exclude>
+                            <exclude>*.xml</exclude>
+                            <exclude>*.yml</exclude>
+                            <exclude>*.txt</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
 </project>
 

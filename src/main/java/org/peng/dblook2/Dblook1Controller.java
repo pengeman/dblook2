@@ -20,6 +20,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.peng.note.NoteDia;
 
 import java.io.IOException;
 import java.net.URL;
@@ -147,7 +148,8 @@ public class Dblook1Controller implements Initializable {
     public void b_book(ActionEvent actionEvent) {
         // todo 打开记事本，用于记录一些知识点
 
-        NoteDia.main();
+        org.peng.note.NoteDia nd = new NoteDia();
+        nd.main();
 //                KeyCombination kc = new KeyCodeCombination(KeyCode.F5);
 //        Mnemonic mnemonic = new Mnemonic(b_doSQL,kc);
 //        this.pane.getScene().addMnemonic(mnemonic);
