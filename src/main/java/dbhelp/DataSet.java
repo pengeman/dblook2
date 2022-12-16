@@ -33,6 +33,19 @@ public class DataSet {
      */
     private int rowNum;
 
+    /**
+     * 记录提示信息
+     */
+    private String messge;
+
+    public String getMessge() {
+        return messge;
+    }
+
+    public DataSet setMessge(String messge) {
+        this.messge = messge;
+        return this;
+    }
 
     public List generateList() {
         // TODO: implement

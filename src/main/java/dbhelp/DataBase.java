@@ -118,8 +118,6 @@ public class DataBase {
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
             dataSet = null;
-        } finally {
-            //close(stat, conn);
         }
         return dataSet;
     }
@@ -174,7 +172,7 @@ public class DataBase {
         int columnCount = md.getColumnCount();
         List list = new ArrayList();
         //将map放入集合中方便使用个别的查询
-        Map rowData = new HashMap();
+        Map rowData = new HashMap();  rs.getRow() // 得到行数量，如果行数量是0，返回空lixt
         while (rs.next()) {
             rowData = new LinkedHashMap(columnCount);
             //将集合放在map中
