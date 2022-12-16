@@ -121,7 +121,8 @@ public class Dblook1Controller implements Initializable {
             return;
         }
         t_sql = t_sql.trim();
-        String first_sql = t_sql.substring(0,6);
+        String first_sql = t_sql.substring(0,6).toLowerCase();
+
         if (first_sql.substring(0, 6).equals("select")) {// 是select语句
             DataSet ds = Common.dataBase.query(t_sql);
             //List dsls = ds.generateList();
@@ -136,8 +137,8 @@ public class Dblook1Controller implements Initializable {
         }
 
         // 执行DML语句
-        Common.dataBase.execute(t_sql);
-        showText("执行完成");
+        //Common.dataBase.execute(t_sql);
+        //showText("执行完成");
 
 
         // 分析sql语句,非阻塞

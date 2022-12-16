@@ -17,7 +17,8 @@ import java.util.Set;
 
 
 /**
- * 数据集，保存查询到的数据，包括数据集，列集，记录数，可选换成List形式的数据集
+ * 数据集，保存查询到的数据，包括数据集，列集，记录数，消息可选换成List形式的数据集
+ * 如果数据集为null,则查看messge字段
  */
 public class DataSet {
     /**

@@ -108,16 +108,22 @@ public class DataBase {
                 rs = statement.getResultSet();
                 // 便利rs,取得数据,生成DataSet
                 List<Map<String, Object>> dtable = this.fetchResultSet(rs);
-                dataSet.setDataTable(dtable);
+                if (dtable.size() == 0){
+                    dataSet.setMessge("没有检索的数据..");
+                    dataSet.setDataTable(null);
+                }else{
+                    dataSet.setDataTable(dtable);
+                }
                 return dataSet;
             } else {
-                //int i = statement.getUpdateCount();
-                dataSet = null;
+                dataSet.setMessge("没有检索的数据..");
+                dataSet.setDataTable(null);
             }
 
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
-            dataSet = null;
+            dataSet.setDataTable(null);
+            dataSet.setMessge(e.getMessage());
         }
         return dataSet;
     }
@@ -172,7 +178,7 @@ public class DataBase {
         int columnCount = md.getColumnCount();
         List list = new ArrayList();
         //将map放入集合中方便使用个别的查询
-        Map rowData = new HashMap();  rs.getRow() // 得到行数量，如果行数量是0，返回空lixt
+        Map rowData = new HashMap();
         while (rs.next()) {
             rowData = new LinkedHashMap(columnCount);
             //将集合放在map中
