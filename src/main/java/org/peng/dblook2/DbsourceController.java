@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class DbsourceController implements Initializable {
     private Button b_cancel;
     @FXML
     private Button b_confirm;
+    @FXML private Button b_addnew;
     @FXML
     private ListView listView;
     @FXML
@@ -66,6 +68,7 @@ public class DbsourceController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             URL url2 = getClass().getClassLoader().getResource("dblook.properties");
+            url = url2.getFile();
             pro.load(new FileInputStream(url2.getFile()));
 
             //得到数据源properties文件,并显示列表
@@ -112,7 +115,14 @@ public class DbsourceController implements Initializable {
                     btnConfirm_click();
                 }
             });
+            b_addnew.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    // TODO 新增连接项
+                    // 打开新对话框
 
+                }
+            });
 
             /*this.parentPane.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
