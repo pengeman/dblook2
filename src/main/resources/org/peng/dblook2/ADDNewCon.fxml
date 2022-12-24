@@ -3,17 +3,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.peng.dblook2.ADDNewCon">
-   <children>
-      <Label fx:id="url" contentDisplay="RIGHT" layoutX="73.0" layoutY="38.0" text="URL" textAlignment="RIGHT" />
-      <Label fx:id="database" contentDisplay="RIGHT" layoutX="73.0" layoutY="75.0" text="数据库" textAlignment="RIGHT" />
-      <Label fx:id="user" contentDisplay="RIGHT" layoutX="73.0" layoutY="109.0" text="用户名" textAlignment="RIGHT" />
-      <Label fx:id="pwd" contentDisplay="RIGHT" layoutX="73.0" layoutY="146.0" text="密码" textAlignment="RIGHT" />
-      <TextField fx:id="text_url" layoutX="112.0" layoutY="34.0" />
-       <TextField fx:id="text_database" layoutX="112.0" layoutY="71.0" />
-       <TextField fx:id="text_user" layoutX="112.0" layoutY="105.0" />
-       <TextField fx:id="text_pwd" layoutX="112.0" layoutY="142.0" />
-       <Button fx:id="b_confirm" layoutX="22.0" layoutY="289.0" prefHeight="26.0" prefWidth="90.0" text="确定"/>
-       <Button fx:id="b_cancel" layoutX="322.0" layoutY="289.0" prefHeight="26.0" prefWidth="90.0" text="放弃"/>
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.peng.dblook2.ADDNewConController">
+    <children>
+        <Label  contentDisplay="RIGHT" layoutX="73.0" layoutY="38.0" text="项目名" textAlignment="RIGHT"/>
+        <Label fx:id="url" contentDisplay="RIGHT" layoutX="73.0" layoutY="72.0" text="URL" textAlignment="RIGHT"/>
+        <Label fx:id="database" contentDisplay="RIGHT" layoutX="73.0" layoutY="106.0" text="数据库"
+               textAlignment="RIGHT"/>
+        <Label fx:id="user" contentDisplay="RIGHT" layoutX="73.0" layoutY="140.0" text="用户名" textAlignment="RIGHT"/>
+        <Label fx:id="pwd" contentDisplay="RIGHT" layoutX="73.0" layoutY="174.0" text="密码" textAlignment="RIGHT"/>
+        <TextField fx:id="proname" layoutX="112.0" layoutY="34.0"/>
+        <TextField fx:id="text_url" layoutX="112.0" layoutY="71.0"/>
+        <TextField fx:id="text_database" layoutX="112.0" layoutY="105.0"/>
+        <TextField fx:id="text_user" layoutX="112.0" layoutY="142.0"/>
+        <TextField fx:id="text_pwd" layoutX="112.0" layoutY="176.0"/>
+        <Button fx:id="b_confirm" layoutX="22.0" layoutY="289.0" prefHeight="26.0" prefWidth="90.0" text="确定"/>
+        <Button fx:id="b_cancel" layoutX="322.0" layoutY="289.0" prefHeight="26.0" prefWidth="90.0" text="放弃"/>
+    </children>
 </AnchorPane>

@@ -8,12 +8,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -120,7 +124,18 @@ public class DbsourceController implements Initializable {
                 public void handle(ActionEvent actionEvent) {
                     // TODO 新增连接项
                     // 打开新对话框
-
+                    try {
+                        URL url = this.getClass().getResource("ADDNewCon.fxml");
+                        Parent root = FXMLLoader.load(url);
+                        Scene scene = new Scene(root);
+                        Stage addNewConStage = new Stage();
+                        addNewConStage.setScene(scene);
+                        addNewConStage.setTitle("新增连接项");
+                        addNewConStage.initModality(Modality.APPLICATION_MODAL);
+                        addNewConStage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
