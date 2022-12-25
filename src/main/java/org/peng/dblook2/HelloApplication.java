@@ -23,6 +23,9 @@ public class HelloApplication  {
                           明天，人们不会发现什么。
                           只有河里的鹅卵石在无休止的说，我看见了，我看见了。
                           但，没有人知道。
+                          
+                          千秋无绝色, 悦目是佳人; 
+                          倾国倾城貌, 惊为天下人.
                 """;
         System.out.println(poetry);
         Application.launch(dblook.class);

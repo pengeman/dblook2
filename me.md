@@ -2,4 +2,4 @@
 -[ ] 修改dataset对象，增加message列，用于record提示信息
 -[ ] 选择数据库连接项界面,增加[新增连接项]
 -[ ] 增加主图标
-- 
+-[ ] 增加一个基本配置文件,指定dblook.properties和dblook.txt配置文件的目录

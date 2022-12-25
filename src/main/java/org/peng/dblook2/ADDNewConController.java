@@ -16,7 +16,7 @@ public class ADDNewConController implements Initializable {
     @FXML
     Button b_confirm,b_cancel;
     @FXML
-    TextField text_url,text_database,text_user,text_pwd;
+    TextField text_project,text_driver,text_url,text_database,text_user,text_pwd;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         b_confirm.setOnAction(new EventHandler<ActionEvent>() {
@@ -38,6 +38,8 @@ public class ADDNewConController implements Initializable {
 
     private void b_onfirm_clicked(ActionEvent actionEvent) {
 // 点击确定按钮
+        String project = text_project.getText();
+        String driver = text_driver.getText();
         String dburl = text_url.getText();
         String database = text_database.getText();
         String user = text_user.getText();
@@ -47,6 +49,13 @@ public class ADDNewConController implements Initializable {
             Properties pro = new Properties();
             pro.load(new java.io.FileInputStream(dblookUrl.getFile()));
 
+            pro.setProperty("project",project);
+            pro.setProperty(project + ".driver",driver);
+            pro.setProperty(project+".url" ,dburl);
+            pro.setProperty(project+".database" ,database);
+            pro.setProperty(project+".user" , user);
+            pro.setProperty(project+".pwd" , pwd);
+            pro.store(new java.io.FileOutputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
