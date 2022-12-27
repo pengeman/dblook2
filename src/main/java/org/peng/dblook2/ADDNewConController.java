@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
@@ -55,7 +56,8 @@ public class ADDNewConController implements Initializable {
             pro.setProperty(project+".database" ,database);
             pro.setProperty(project+".user" , user);
             pro.setProperty(project+".pwd" , pwd);
-            pro.store(new java.io.FileOutputStream());
+            java.io.BufferedOutputStream bos = new java.io.BufferedOutputStream(new java.io.FileOutputStream("dblook.properties"));
+            pro.store(bos,"kdkdkdkdkdkdk");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
