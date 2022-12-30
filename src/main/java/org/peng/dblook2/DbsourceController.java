@@ -12,14 +12,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -71,10 +69,17 @@ public class DbsourceController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            URL url2 = getClass().getClassLoader().getResource("dblook.properties");
-            url = url2.getFile();
-            pro.load(new FileInputStream(url2.getFile()));
+            String dblook_properties = Common.dblook_conf;
+            //URL url2 = getClass().getClassLoader().getResource(dblook_properties);
+            File dblookfile = new File(dblook_properties);
 
+            pro.load(new FileInputStream(dblookfile));
+if (pro.size() == 0){
+    Alert alert = new Alert(Alert.AlertType.WARNING);
+    alert.setContentText("连接项配置文件错误");
+    alert.show();
+    return;
+}
             //得到数据源properties文件,并显示列表
             List<String> projectlist = this.getAllProject();
             ObservableList<String> dblist = FXCollections.observableArrayList();
@@ -94,14 +99,14 @@ public class DbsourceController implements Initializable {
 
                     DbsourceController.this.curProject = (String) newValue;
 
-                    driver = pro.getProperty(newValue + ".driver");
-                    url = pro.getProperty(newValue + ".url");
-                    db = pro.getProperty(newValue + ".db");
+                    driver   = pro.getProperty(newValue + ".driver");
+                    url      = pro.getProperty(newValue + ".url");
+                    db       = pro.getProperty(newValue + ".database");
                     username = pro.getProperty(newValue + ".username");
-                    pwd = pro.getProperty(newValue + ".password");
+                    pwd      = pro.getProperty(newValue + ".password");
                     textArea.setText("driver = " + driver + "\n" +
                             "url = " + url + "\n" +
-                            "db = " + db + "\n" +
+                            "database = " + db + "\n" +
                             "username = " + username + "\n" +
                             "password = " + pwd);
                 }
@@ -148,8 +153,6 @@ public class DbsourceController implements Initializable {
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private void btnConfirm_click() {

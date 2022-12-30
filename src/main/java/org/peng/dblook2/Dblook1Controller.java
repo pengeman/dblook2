@@ -101,13 +101,19 @@ public class Dblook1Controller implements Initializable {
 
         URL url = this.getClass().getResource("dbsource.fxml");
         try {
-            root = FXMLLoader.load(url);
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setController(this);
+//            loader.setLocation(url);
+//            root = loader.load();
+            //root = FXMLLoader.load(url);
+            FXMLLoader fxmlLoader = new FXMLLoader(url);
+            Scene scene = new Scene(fxmlLoader.load());
             dbsourceStage.setTitle("选择数据源");
-            dbsourceStage.setScene(new Scene(root));
-            dbsourceStage.initModality(Modality.WINDOW_MODAL);
+            dbsourceStage.setScene(scene);
+            dbsourceStage.initModality(Modality.APPLICATION_MODAL);
             dbsourceStage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
