@@ -80,12 +80,13 @@ public class ADDNewConController implements Initializable {
             BufferedReader br = new BufferedReader(isRead);
             String strprject = br.readLine();
             if (strprject != null) {
+                strprject = strprject.split("=")[1];
                 project = strprject;
             } else {
                 project = "";
             }
 //    strprject != null ? project = strprject : project = "";
-            project = project + text_project.getText();
+            project = project + "," + text_project.getText();
             String driver = text_driver.getText();
             String dburl = text_url.getText();
             String database = text_database.getText();
@@ -95,25 +96,28 @@ public class ADDNewConController implements Initializable {
             java.io.BufferedOutputStream bo = new java.io.BufferedOutputStream(new java.io.FileOutputStream(proFile));
             java.io.OutputStreamWriter oswrite = new OutputStreamWriter(bo);
 
-            //strprject = br.readLine();
-            do {
+            StringBuffer s_properties = new StringBuffer();
+            strprject = br.readLine();
+            while (strprject != null){
+                //oswrite.write(strprject);
+                s_properties.append(strprject);
                 strprject = br.readLine();
-                oswrite.write(strprject);
-            } while (strprject != null);
+            }
 
-            String projectfile = "project = " + project + "\n" +
-                    project + ".driver = " + driver + "\n" +
-                    project + ".url = " + dburl + "\n" +
-                    project + ".database = " + database + "\n" +
-                    project + ".username = " + user + "\n" +
-                    project + ".password = " + pwd + "\n" +
-                    project + ".characterEncoding =  utf-8 \n" +
-                    project + ".InitialSize = 1 \n" +
-                    project + ".MaxActive= 1 \n" +
-                    project + ".MaxWait = 1 \n" +
-                    project + ".MinIdle = 1 \n";
-
-            oswrite.write(projectfile);
+            StringBuffer projectfile = new StringBuffer();
+                    projectfile.append("project = " + project + "\n");
+                    projectfile.append(project + ".driver = " + driver + "\n");
+                    projectfile.append(project + ".url = " + dburl + "\n" );
+                    projectfile.append(project + ".database = " + database + "\n");
+                    projectfile.append(project + ".username = " + user + "\n");
+                    projectfile.append(project + ".password = " + pwd + "\n" );
+                    projectfile.append(project + ".characterEncoding =  utf-8 \n");
+                    projectfile.append(project + ".InitialSize = 1 \n");
+                    projectfile.append(project + ".MaxActive= 1 \n");
+                    projectfile.append(project + ".MaxWait = 1 \n");
+                    projectfile.append(project + ".MinIdle = 1 \n");
+oswrite.write(s_properties.toString());
+            oswrite.write(projectfile.toString());
             oswrite.close();
             bo.close();
             isRead.close();
