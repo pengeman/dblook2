@@ -91,7 +91,7 @@ public class ADDNewConController implements Initializable {
         String pwd = text_pwd.getText();
 
         StringBuffer propertiesContent2 = new StringBuffer();
-        project1 = project1 + project2;
+        project1 = project1 + "," + project2;
         //propertiesContent2.append("project = " + project + "\n");
         propertiesContent2.append(project2 + ".driver = " + driver + "\n");
         propertiesContent2.append(project2 + ".url = " + dburl + "\n");
@@ -105,9 +105,9 @@ public class ADDNewConController implements Initializable {
         propertiesContent2.append(project2 + ".MinIdle = 1 \n");
 
         // 将原properties中的第一行的project项修改
-        propertiesContent = propertiesContent.delete(0, indexn).insert(0, project1);
+        propertiesContent = propertiesContent.delete(0, indexn).insert(0, "project = " + project1);
 
         // 将数据写入属性文件
-        fileHelp.write(proFile, propertiesContent);
+        fileHelp.write(proFile, propertiesContent.append(propertiesContent2));
     }
 }
