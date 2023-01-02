@@ -1,5 +1,6 @@
 package org.peng.dblook2;
 
+import fileHelp.FileHelp;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -73,58 +74,40 @@ public class ADDNewConController implements Initializable {
     }
 
     private void writeProperties(File proFile) {
-        String project = null;
-        try {
-            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(proFile));
-            InputStreamReader isRead = new InputStreamReader(bis);
-            BufferedReader br = new BufferedReader(isRead);
-            String strprject = br.readLine();
-            if (strprject != null) {
-                strprject = strprject.split("=")[1];
-                project = strprject;
-            } else {
-                project = "";
-            }
-//    strprject != null ? project = strprject : project = "";
-            project = project + "," + text_project.getText();
-            String driver = text_driver.getText();
-            String dburl = text_url.getText();
-            String database = text_database.getText();
-            String user = text_user.getText();
-            String pwd = text_pwd.getText();
+        String project2 = null;
+        StringBuffer propertiesContent = new StringBuffer();
+        FileHelp fileHelp = new FileHelp();
+        propertiesContent = fileHelp.read(proFile); //  读出原书properties文件的内容
+        int indexn = propertiesContent.indexOf("\n");
+        String project1 = propertiesContent.substring(0, indexn); // project = mysql,qq,ww
+        project1 = project1.substring(project1.indexOf("=")).trim(); // 取出原project的内容
 
-            java.io.BufferedOutputStream bo = new java.io.BufferedOutputStream(new java.io.FileOutputStream(proFile));
-            java.io.OutputStreamWriter oswrite = new OutputStreamWriter(bo);
+        // 得到新连接项数据
+        project2 = text_project.getText();
+        String driver = text_driver.getText();
+        String dburl = text_url.getText();
+        String database = text_database.getText();
+        String user = text_user.getText();
+        String pwd = text_pwd.getText();
 
-            StringBuffer s_properties = new StringBuffer();
-            strprject = br.readLine();
-            while (strprject != null){
-                //oswrite.write(strprject);
-                s_properties.append(strprject);
-                strprject = br.readLine();
-            }
+        StringBuffer propertiesContent2 = new StringBuffer();
+        project1 = project1 + project2;
+        //propertiesContent2.append("project = " + project + "\n");
+        propertiesContent2.append(project2 + ".driver = " + driver + "\n");
+        propertiesContent2.append(project2 + ".url = " + dburl + "\n");
+        propertiesContent2.append(project2 + ".database = " + database + "\n");
+        propertiesContent2.append(project2 + ".username = " + user + "\n");
+        propertiesContent2.append(project2 + ".password = " + pwd + "\n");
+        propertiesContent2.append(project2 + ".characterEncoding =  utf-8 \n");
+        propertiesContent2.append(project2 + ".InitialSize = 1 \n");
+        propertiesContent2.append(project2 + ".MaxActive= 1 \n");
+        propertiesContent2.append(project2 + ".MaxWait = 1 \n");
+        propertiesContent2.append(project2 + ".MinIdle = 1 \n");
 
-            StringBuffer projectfile = new StringBuffer();
-                    projectfile.append("project = " + project + "\n");
-                    projectfile.append(project + ".driver = " + driver + "\n");
-                    projectfile.append(project + ".url = " + dburl + "\n" );
-                    projectfile.append(project + ".database = " + database + "\n");
-                    projectfile.append(project + ".username = " + user + "\n");
-                    projectfile.append(project + ".password = " + pwd + "\n" );
-                    projectfile.append(project + ".characterEncoding =  utf-8 \n");
-                    projectfile.append(project + ".InitialSize = 1 \n");
-                    projectfile.append(project + ".MaxActive= 1 \n");
-                    projectfile.append(project + ".MaxWait = 1 \n");
-                    projectfile.append(project + ".MinIdle = 1 \n");
-oswrite.write(s_properties.toString());
-            oswrite.write(projectfile.toString());
-            oswrite.close();
-            bo.close();
-            isRead.close();
-            bis.close();
+        // 将原properties中的第一行的project项修改
+        propertiesContent = propertiesContent.delete(0, indexn).insert(0, project1);
 
-        } catch (IOException e) {
-            LOG.error(e.getMessage());
-        }
+        // 将数据写入属性文件
+        fileHelp.write(proFile, propertiesContent);
     }
 }
