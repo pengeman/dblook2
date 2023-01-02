@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
@@ -43,34 +44,12 @@ public class ADDNewConController implements Initializable {
         // 点击确定按钮
         String dblook_properties = Common.dblook_conf;
         this.writeProperties(new File(dblook_properties));
-//        String project = text_project.getText();
-//        String driver = text_driver.getText();
-//        String dburl = text_url.getText();
-//        String database = text_database.getText();
-//        String user = text_user.getText();
-//        String pwd = text_pwd.getText();
-//        try {
-//            String dblook_properties = Common.dblook_conf;
-//            URL dblookUrl = this.getClass().getClassLoader().getResource(dblook_properties);
-//            Properties pro = new Properties();
-//            pro.load(new java.io.FileInputStream(dblookUrl.getFile()));
-//
-//            pro.setProperty("project",project);
-//            pro.setProperty(project + ".driver",driver);
-//            pro.setProperty(project+".url" ,dburl);
-//            pro.setProperty(project+".database" ,database);
-//            pro.setProperty(project+".username" , user);
-//            pro.setProperty(project+".password" , pwd);
-//            java.io.BufferedOutputStream bos = new java.io.BufferedOutputStream(new java.io.FileOutputStream(dblook_properties));
-//            pro.store(bos,"kdkdkdkdkdkdk");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
     }
 
     private void b_cancel_clicked(ActionEvent actionEvent) {
-
+        System.out.println("关闭窗口");
+        Stage stage = (Stage) this.b_cancel.getScene().getWindow();
+        stage.close();
     }
 
     private void writeProperties(File proFile) {
