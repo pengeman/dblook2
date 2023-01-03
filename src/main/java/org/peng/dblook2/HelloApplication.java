@@ -8,12 +8,9 @@ package org.peng.dblook2;
  */
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import org.peng.dblook2.util.Common;
 
 import java.io.*;
-import java.util.Properties;
 
 public class HelloApplication {
     static org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(HelloApplication.class);

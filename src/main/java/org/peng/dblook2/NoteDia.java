@@ -50,7 +50,7 @@ public class NoteDia extends javax.swing.JDialog {
         undo.setLimit(30);
         this.jTextPane1.getDocument().addUndoableEditListener(undo);
 
-//        String path = org.peng.dblook2.Common.userdir + "/icons/gur-project-16.png";
+//        String path = org.peng.dblook2.util.Common.userdir + "/icons/gur-project-16.png";
 //        System.out.println("path : " + path);
         String path;
         path = this.getClass().getResource("/icons/gur-project-14.png").getFile();

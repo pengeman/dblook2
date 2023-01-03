@@ -1,7 +1,7 @@
 /*
  * 公共静态类
  */
-package org.peng.dblook2;
+package org.peng.dblook2.util;
 
 import org.springframework.boot.system.SystemProperties;
 

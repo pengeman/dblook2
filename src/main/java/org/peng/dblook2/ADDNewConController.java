@@ -6,16 +6,21 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.peng.dblook2.util.Common;
+import org.peng.dblook2.util.Device;
 
 import java.io.*;
 import java.net.URL;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class ADDNewConController implements Initializable {
     org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger();
+    @FXML
+    Label smi;
     @FXML
     Button b_confirm, b_cancel;
     @FXML
@@ -23,6 +28,13 @@ public class ADDNewConController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        smi.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                //笑脸被鼠标点击
+                smi_clicked(mouseEvent);
+            }
+        });
         b_confirm.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -36,6 +48,17 @@ public class ADDNewConController implements Initializable {
                 b_cancel_clicked(actionEvent);
             }
         });
+    }
+
+    private void smi_clicked(MouseEvent mouseEvent) {
+        String project = text_project.getText();
+        String[] devices = Device.project.get(project);
+        if (devices != null) {
+            String driver = devices[0];
+            String url = devices[1];
+            this.text_driver.setText(driver);
+            this.text_url.setText(url);
+        }
     }
 
 
@@ -59,7 +82,7 @@ public class ADDNewConController implements Initializable {
         propertiesContent = fileHelp.read(proFile); //  读出原书properties文件的内容
         int indexn = propertiesContent.indexOf("\n");
         String project1 = propertiesContent.substring(0, indexn); // project = mysql,qq,ww
-        project1 = project1.substring(project1.indexOf("=")).trim(); // 取出原project的内容
+        project1 = project1.substring(project1.indexOf("=")+1).trim(); // 取出原project的内容
 
         // 得到新连接项数据
         project2 = text_project.getText();
