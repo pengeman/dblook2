@@ -1,6 +1,7 @@
 package org.peng.dblook2;
 
 import dbhelp.DBConnection;
+import fileHelp.FileHelp;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.peng.dblook2.util.Common;
+import org.peng.dblook2.util.Device;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,7 +49,8 @@ public class DbsourceController implements Initializable {
     private Button b_cancel;
     @FXML
     private Button b_confirm;
-    @FXML private Button b_addnew;
+    @FXML
+    private Button b_addnew, b_dele, b_modify;
     @FXML
     private ListView listView;
     @FXML
@@ -75,12 +78,12 @@ public class DbsourceController implements Initializable {
             File dblookfile = new File(dblook_properties);
 
             pro.load(new FileInputStream(dblookfile));
-if (pro.size() == 0){
-    Alert alert = new Alert(Alert.AlertType.WARNING);
-    alert.setContentText("连接项配置文件错误");
-    alert.show();
-    return;
-}
+            if (pro.size() == 0) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("连接项配置文件错误");
+                alert.show();
+                return;
+            }
             //得到数据源properties文件,并显示列表
             List<String> projectlist = this.getAllProject();
             ObservableList<String> dblist = FXCollections.observableArrayList();
@@ -100,11 +103,11 @@ if (pro.size() == 0){
 
                     DbsourceController.this.curProject = (String) newValue;
 
-                    driver   = pro.getProperty(newValue + ".driver");
-                    url      = pro.getProperty(newValue + ".url");
-                    db       = pro.getProperty(newValue + ".database");
+                    driver = pro.getProperty(newValue + ".driver");
+                    url = pro.getProperty(newValue + ".url");
+                    db = pro.getProperty(newValue + ".database");
                     username = pro.getProperty(newValue + ".username");
-                    pwd      = pro.getProperty(newValue + ".password");
+                    pwd = pro.getProperty(newValue + ".password");
                     textArea.setText("driver = " + driver + "\n" +
                             "url = " + url + "\n" +
                             "database = " + db + "\n" +
@@ -145,6 +148,18 @@ if (pro.size() == 0){
                 }
             });
 
+            b_dele.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    btnDele_click(actionEvent);
+                }
+            });
+            b_modify.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    btnModify_click(actionEvent);
+                }
+            });
             /*this.parentPane.getScene().getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
@@ -156,10 +171,48 @@ if (pro.size() == 0){
         }
     }
 
+    private void btnDele_click(ActionEvent actionEvent){
+        // todo 删除连接项按钮被点击
+        StringBuffer pros,pros2 = new StringBuffer();
+
+        File file = new File(Common.dblook_conf);
+        fileHelp.FileHelp fHelp = new FileHelp();
+        pros = fHelp.read(file);
+
+        String project = pros.substring(0,pros.indexOf("\n")); // 取出首行project项
+        String[] pro = project.split("=");
+        pro = pro[1].split(",");
+        String[] pro2 = new String[pro.length];
+        String spro2 = "";
+        for (int i = 0 ; i < pro.length; i ++){
+            if (!pro[i].contentEquals(curProject)){
+                //pro2[i] = pro[i];
+                spro2 = spro2 + pro[i] + ",";
+            }
+        }  // spro2 是不包含被删除字符串的project
+spro2 = spro2.substring(0,spro2.length() - 1);
+        pro2 = spro2.split(",");
+        pro = pros.toString().split("\n");
+pro[0] = "project = " ;
+for (int i = 0 ; i < pro2.length; i ++){
+    pro[0] = pro[0] + pro2[i] + ",";
+}
+pro[0] = pro[0].substring(0,pro[0].length() -1);
+        for (int i = 0 ; i < pro.length; i ++){
+            if (pro[i].contains(curProject+".")){
+                pro[i] = "";
+            }
+            pros2.append(pro[i].trim()+"\n");
+        }
+fHelp.write(file,pros2);
+    }
+    private void btnModify_click(ActionEvent event){
+
+    }
     private void btnConfirm_click() {
         System.out.println("确定,链接数据库");
         // 链接数据库,创建数据库对象
-        DBConnection con = new DBConnection(driver,url,username,pwd);
+        DBConnection con = new DBConnection(driver, url, username, pwd);
         dbhelp.DataBase dataBase = con.createDatabase();
 
         Common.dataBase = dataBase;
