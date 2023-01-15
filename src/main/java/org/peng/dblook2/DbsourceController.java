@@ -173,6 +173,7 @@ public class DbsourceController implements Initializable {
 
     private void btnDele_click(ActionEvent actionEvent){
         // todo 删除连接项按钮被点击
+
         StringBuffer pros,pros2 = new StringBuffer();
 
         File file = new File(Common.dblook_conf);
@@ -205,6 +206,10 @@ pro[0] = pro[0].substring(0,pro[0].length() -1);
             pros2.append(pro[i].trim()+"\n");
         }
 fHelp.write(file,pros2);
+    }
+
+    private void deleteProject(String project){
+        //删除指定的project
     }
     private void btnModify_click(ActionEvent event){
 

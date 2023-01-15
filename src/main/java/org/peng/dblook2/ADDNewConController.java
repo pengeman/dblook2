@@ -63,10 +63,11 @@ public class ADDNewConController implements Initializable {
 
 
     private void b_onfirm_clicked(ActionEvent actionEvent) {
-
         // 点击确定按钮
         String dblook_properties = Common.dblook_conf;
         this.writeProperties(new File(dblook_properties));
+        javax.swing.JOptionPane.showMessageDialog(null,"新增连接项完成");
+        this.b_cancel_clicked(actionEvent);
     }
 
     private void b_cancel_clicked(ActionEvent actionEvent) {
