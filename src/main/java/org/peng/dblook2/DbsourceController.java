@@ -24,10 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * @param
@@ -247,7 +244,38 @@ fHelp.write(file,pros2);
             }
         }
         return prol;
+    }
 
+    /**
+     * 新增一个project-连接项
+     * @param proname,driver,url,user,pwd
+     */
+    private void addNewProject(String proname,String driver,String url , String user , String pwd){
+
+    }
+
+    /**
+     * 删除一个project-连接项
+     * @param proname
+     */
+    private void delProject(String proname){
+
+    }
+
+    /**
+     * 更新一个连接项
+     * @param proname
+     * @param driver
+     * @param url
+     * @param user
+     * @param pwd
+     */
+    private void updateProject(String proname,String driver , String url , String user , String pwd){
+
+    }
+
+    private Map retrievePorjct(String proname){
+        return null;
     }
 
 }
