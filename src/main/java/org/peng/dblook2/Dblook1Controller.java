@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,13 +18,17 @@ import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.peng.dblook2.util.Common;
 import org.peng.note.NoteDia;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class Dblook1Controller implements Initializable {
@@ -107,7 +112,27 @@ public class Dblook1Controller implements Initializable {
             dbsourceStage.setTitle("选择数据源");
             dbsourceStage.setScene(scene);
             dbsourceStage.initModality(Modality.APPLICATION_MODAL);
-            dbsourceStage.show();
+            dbsourceStage.setOnShown(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    System.out.println("dbsourceStage show .........");
+                    String dblook_properties = Common.dblook_conf;
+                    //URL url2 = getClass().getClassLoader().getResource(dblook_properties);
+                    File dblookfile = new File(dblook_properties);
+java.util.Properties pro = new Properties();
+try {
+    pro.load(new FileInputStream(dblookfile));
+    if (pro.size() == 0) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setContentText("连接项配置文件错误");
+        alert.show();
+    }else dbsourceStage.show();
+}catch (IOException e){
+    e.printStackTrace();
+}
+                }
+            });
+
         } catch (IOException e) {
             e.printStackTrace();
         }

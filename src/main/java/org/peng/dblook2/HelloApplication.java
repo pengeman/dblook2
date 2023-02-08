@@ -30,23 +30,29 @@ public class HelloApplication {
         // 检查配置文件是否存在
         String userdir = Common.userdir;
         java.io.File userdirfile = new File(userdir);
+        java.io.File dblook_config = new File(Common.dblook_conf);
+        java.io.File dblook_file = new File(Common.dblook_file);
         if (!userdirfile.exists()) {
             try {
                 //userdirfile.createNewFile();
 
                 userdirfile.mkdir();
                 LOG.debug("创建目录: " + userdirfile.getAbsolutePath());
-                java.io.File dblook_config = new File(Common.dblook_conf);
+                //java.io.File dblook_config = new File(Common.dblook_conf);
                 dblook_config.createNewFile();
                 writeProperties(dblook_config);
                 LOG.debug("创建文件: " + dblook_config.getAbsolutePath());
-                java.io.File dblook_file = new File(Common.dblook_file);
+                //java.io.File dblook_file = new File(Common.dblook_file);
 
                 dblook_file.createNewFile();
                 LOG.debug("创建文件: " + dblook_file.getAbsolutePath());
             } catch (Exception e) {
                 LOG.error(e.getMessage());
             }
+        }
+        // 如果配置文件存在，判断文件是否有内容
+        if ( dblook_config.length() == 0){
+            writeProperties(dblook_config);
         }
 
 

@@ -69,18 +69,18 @@ public class DbsourceController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            String dblook_properties = Common.dblook_conf;
-            //URL url2 = getClass().getClassLoader().getResource(dblook_properties);
-            File dblookfile = new File(dblook_properties);
 
-            pro.load(new FileInputStream(dblookfile));
-            if (pro.size() == 0) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("连接项配置文件错误");
-                alert.show();
-                return;
-            }
+//            String dblook_properties = Common.dblook_conf;
+//            //URL url2 = getClass().getClassLoader().getResource(dblook_properties);
+//            File dblookfile = new File(dblook_properties);
+//
+//            pro.load(new FileInputStream(dblookfile));
+//            if (pro.size() == 0) {
+//                Alert alert = new Alert(Alert.AlertType.WARNING);
+//                alert.setContentText("连接项配置文件错误");
+//                alert.show();
+//                return;
+//            }
             //得到数据源properties文件,并显示列表
             List<String> projectlist = this.getAllProject();
             ObservableList<String> dblist = FXCollections.observableArrayList();
@@ -163,9 +163,7 @@ public class DbsourceController implements Initializable {
                     btnClose_Click();
                 }
             });*/
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     private void btnDele_click(ActionEvent actionEvent){
@@ -203,6 +201,11 @@ pro[0] = pro[0].substring(0,pro[0].length() -1);
             pros2.append(pro[i].trim()+"\n");
         }
 fHelp.write(file,pros2);
+    }
+
+    @FXML
+    private void u_zoomFinished(){
+        System.out.println("onzoomFinished.......................");
     }
 
     private void deleteProject(String project){

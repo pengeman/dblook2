@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="parentPane" prefHeight="495.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.peng.dblook2.DbsourceController">
+<AnchorPane fx:id="parentPane" onZoomFinished="#u_zoomFinished"  prefHeight="495.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.peng.dblook2.DbsourceController">
     <children>
         <SplitPane fx:id="splitPane" dividerPositions="0.2" layoutY="27.0" prefHeight="373.0" prefWidth="600.0">
             <items>
@@ -21,8 +21,8 @@
         </SplitPane>
         <Button fx:id="b_cancel" layoutX="496.0" layoutY="437.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="放弃" />
         <Button fx:id="b_confirm" layoutX="370.0" layoutY="437.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="确定" />
-        <Button fx:id="b_addnew" layoutX="25.0" layoutY="437.0" mnemonicParsing="false" prefHeight="26"  prefWidth="90" text="新增连接项" />
-        <Button fx:id="b_dele" layoutX="125.0" layoutY="437.0" mnemonicParsing="false" prefHeight="26"  prefWidth="90" text="删除连接项" />
-        <Button fx:id="b_modify" layoutX="225.0" layoutY="437.0" mnemonicParsing="false" prefHeight="26"  prefWidth="90" text="编辑连接项" />
+        <Button fx:id="b_addnew" layoutX="25.0" layoutY="437.0" mnemonicParsing="false" prefHeight="26" prefWidth="90" text="新增连接项" />
+        <Button fx:id="b_dele" layoutX="125.0" layoutY="437.0" mnemonicParsing="false" prefHeight="26" prefWidth="90" text="删除连接项" />
+        <Button fx:id="b_modify" layoutX="225.0" layoutY="437.0" mnemonicParsing="false" prefHeight="26" prefWidth="90" text="编辑连接项" />
     </children>
 </AnchorPane>
