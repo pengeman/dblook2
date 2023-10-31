@@ -107,7 +107,11 @@
             <artifactId>c3p0</artifactId>
             <version>0.9.5.5</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.adedayo.intellij.sdk</groupId>
+            <artifactId>forms_rt</artifactId>
+            <version>142.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

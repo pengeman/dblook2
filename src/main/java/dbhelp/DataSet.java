@@ -70,6 +70,8 @@ public class DataSet {
     }
 
     public void setDataTable(List<Map<String, Object>> dataTable) {
+        if (dataTable == null ) return ;
+
         this.dataTable = dataTable;
         if (dataTable.size() > 0){
             Set colnames = dataTable.get(0).keySet();

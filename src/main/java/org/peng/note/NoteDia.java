@@ -29,4 +29,9 @@ public class NoteDia {
             throw new RuntimeException(e);
         }
     }
+
+    // javaswing 制作的note
+    public void swing_main(){
+
+    }
 }

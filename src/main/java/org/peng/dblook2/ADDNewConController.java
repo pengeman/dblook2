@@ -12,15 +12,21 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.peng.dblook2.util.Common;
 import org.peng.dblook2.util.Device;
-
-import java.io.*;
+import org.apache.commons.lang3.StringUtils;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class ADDNewConController implements Initializable {
     org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger();
     @FXML
-    Label smi;
+    Label smi, flag;
     @FXML
     Button b_confirm, b_cancel;
     @FXML
@@ -39,7 +45,7 @@ public class ADDNewConController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
                 // 确定按钮
-                b_onfirm_clicked(actionEvent);
+                b_confirm_clicked(actionEvent);
             }
         });
         b_cancel.setOnAction(new EventHandler<ActionEvent>() {
@@ -62,13 +68,24 @@ public class ADDNewConController implements Initializable {
     }
 
 
-    private void b_onfirm_clicked(ActionEvent actionEvent) {
+    private void b_confirm_clicked(ActionEvent actionEvent) {
         // 点击确定按钮
-        String dblook_properties = Common.dblook_conf;
-        this.writeProperties(new File(dblook_properties));
-        javax.swing.JOptionPane.showMessageDialog(null,"新增连接项完成");
-        this.b_cancel_clicked(actionEvent);
+        String flag = this.flag.getText();
+        if (StringUtils.equals(flag,"modify")){
+            // 这是一个编辑窗口
+            String dblook_properties = Common.dblook_conf;
+            this.modifyProperties(new File(dblook_properties));
+            javax.swing.JOptionPane.showMessageDialog(null, "编辑连接项完成");
+            this.b_cancel_clicked(actionEvent);
+        }else{
+            // 这是一个新建窗口
+            String dblook_properties = Common.dblook_conf;
+            this.writeProperties(new File(dblook_properties));
+            javax.swing.JOptionPane.showMessageDialog(null, "新增连接项完成");
+            this.b_cancel_clicked(actionEvent);
+        }
     }
+
 
     private void b_cancel_clicked(ActionEvent actionEvent) {
         System.out.println("关闭窗口");
@@ -76,14 +93,39 @@ public class ADDNewConController implements Initializable {
         stage.close();
     }
 
+    private void modifyProperties(File propertiesFile) {
+        String projectName = text_project.getText();
+        Properties pro = new Properties();
+        try {
+            pro.load(new FileInputStream(propertiesFile));
+            String driver = text_driver.getText();
+            String dburl = text_url.getText();
+            String database = text_database.getText();
+            String user = text_user.getText();
+            String pwd = text_pwd.getText();
+            pro.setProperty(projectName + ".driver" ,driver);
+            pro.setProperty(projectName + ".url" , dburl);
+            pro.setProperty(projectName + ".database" , database);
+            pro.setProperty(projectName + ".username" , user);
+            pro.setProperty(projectName + ".password" , pwd);
+            pro.setProperty(projectName + ".characterEncoding" , "utf-8");
+            pro.setProperty(projectName + ".InitialSize" , "1");
+            pro.setProperty(projectName + ".MaxActive" , "1");
+            pro.setProperty(projectName + ".MinIdle" , "1");
+            pro.store(new FileOutputStream(propertiesFile),"modify " + projectName + " by " + new SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(new Date()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void writeProperties(File proFile) {
-        String project2 = null;
+        String project1,project2 = null;
         StringBuffer propertiesContent = new StringBuffer();
         FileHelp fileHelp = new FileHelp();
         propertiesContent = fileHelp.read(proFile); //  读出原书properties文件的内容
         int indexn = propertiesContent.indexOf("\n");
-        String project1 = propertiesContent.substring(0, indexn); // project = mysql,qq,ww
-        project1 = project1.substring(project1.indexOf("=")+1).trim(); // 取出原project的内容
+        project1 = propertiesContent.substring(0, indexn); // project = mysql,qq,ww
+        project1 = project1.substring(project1.indexOf("=") + 1).trim(); // 取出原project的内容
 
         // 得到新连接项数据
         project2 = text_project.getText();

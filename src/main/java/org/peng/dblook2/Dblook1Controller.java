@@ -61,6 +61,7 @@ public class Dblook1Controller implements Initializable {
         this.s_pane.prefHeightProperty().bind(pane.heightProperty());
         this.t_sql.prefWidthProperty().bind(s_pane.widthProperty());
         this.table1.prefWidthProperty().bind(s_pane.widthProperty());
+        this.t_d.prefWidthProperty().bind(s_pane.widthProperty());
 
 //        KeyCombination kc = new KeyCodeCombination(KeyCode.F5);
 //        Mnemonic mnemonic = new Mnemonic(b_doSQL,kc);
@@ -89,6 +90,7 @@ public class Dblook1Controller implements Initializable {
                 double height = s_pane.getPrefHeight();
                 t_sql.setPrefHeight(height * ((double) newv));
                 table1.setPrefHeight(height - height * ((double) newv) - 40);
+                t_d.setPrefHeight(height - height * ((double) newv) - 40);
 
             }
         });
@@ -112,26 +114,28 @@ public class Dblook1Controller implements Initializable {
             dbsourceStage.setTitle("选择数据源");
             dbsourceStage.setScene(scene);
             dbsourceStage.initModality(Modality.APPLICATION_MODAL);
-            dbsourceStage.setOnShown(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent windowEvent) {
-                    System.out.println("dbsourceStage show .........");
-                    String dblook_properties = Common.dblook_conf;
-                    //URL url2 = getClass().getClassLoader().getResource(dblook_properties);
-                    File dblookfile = new File(dblook_properties);
-java.util.Properties pro = new Properties();
-try {
-    pro.load(new FileInputStream(dblookfile));
-    if (pro.size() == 0) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setContentText("连接项配置文件错误");
-        alert.show();
-    }else dbsourceStage.show();
-}catch (IOException e){
-    e.printStackTrace();
-}
-                }
-            });
+            dbsourceStage.show();
+//            dbsourceStage.setOnShown(new EventHandler<WindowEvent>() {
+//                @Override
+//                public void handle(WindowEvent windowEvent) {
+//                    System.out.println("dbsourceStage show .........");
+//                    String dblook_properties = Common.dblook_conf;
+//                    //URL url2 = getClass().getClassLoader().getResource(dblook_properties);
+//                    File dblookfile = new File(dblook_properties);
+//                    java.util.Properties pro = new Properties();
+//                    try {
+//                        pro.load(new FileInputStream(dblookfile));
+//                        if (pro.size() == 0) {
+//                            Alert alert = new Alert(Alert.AlertType.WARNING);
+//                            alert.setContentText("连接项配置文件错误");
+//                            alert.show();
+//                        } //else dbsourceStage.show();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//            );
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -148,7 +152,7 @@ try {
             return;
         }
         t_sql = t_sql.trim();
-        String first_sql = t_sql.substring(0,6).toLowerCase();
+        String first_sql = t_sql.substring(0, 6).toLowerCase();
 
         if (first_sql.substring(0, 6).equals("select")) {// 是select语句
             DataSet ds = Common.dataBase.query(t_sql);
@@ -158,7 +162,7 @@ try {
         }
 
         // 执行DDL语句
-        if (first_sql.equals("insert") || first_sql.equals("update") || first_sql.equals("delete")){
+        if (first_sql.equals("insert") || first_sql.equals("update") || first_sql.equals("delete")) {
             int r = Common.dataBase.execute(t_sql);
             showText("执行完成，影响了" + r + "条语句");
         }
@@ -200,6 +204,12 @@ try {
 
         TableColumn t_col[];
         List<String> colNames = ds.getColNameSet();
+        if (colNames == null || colNames.size() == 0) {
+            // 显示ds中的message
+            showMessageFor(ds);
+            return ;
+        }
+
         t_col = new TableColumn[colNames.size()];
         for (int i = 0; i < t_col.length; i++) {
             String colName = colNames.get(i);
@@ -232,4 +242,10 @@ try {
         // todo 窗口开始时
         System.out.println("zoom Started .... ");
     }
+
+    private void showMessageFor(DataSet ds){
+        String msg = ds.getMessge();
+        this.showText(msg);
+    }
+
 }

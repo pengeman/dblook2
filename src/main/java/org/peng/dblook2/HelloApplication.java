@@ -10,7 +10,11 @@ package org.peng.dblook2;
 import javafx.application.Application;
 import org.peng.dblook2.util.Common;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 
 public class HelloApplication {
     static org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(HelloApplication.class);
@@ -80,6 +84,8 @@ public class HelloApplication {
             oswrite.close();
             bo.close();
 
+        } catch (FileNotFoundException  e) {
+            LOG.error(e.getMessage());
         } catch (IOException e) {
             LOG.error(e.getMessage());
         }

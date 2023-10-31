@@ -132,28 +132,30 @@ public class DBConnection {
      */
     private Properties getConfig() {
         File configFile = null;
-        URL url = null;
-
+        //URL url = null;
+        String urlname = "";
         // 查找配置文件,查找顺序:properties,xml,yml,json
         int urlFlag = 0; // url文件的类型,0:properties,1:xml,2:yml,3:json
-        url = this.getClass().getResource("/resource_Expired/sqlcofig.properties");
-        if (url == null) {
-            url = this.getClass().getResource("/resource_Expired/sqlconfig.xml");
+        urlname = this.getClass().getResource("/") + "sqlcofig.properties";
+        System.out.println("140,rul " + urlname);
+        if (urlname == null) {
+            urlname = this.getClass().getResource("/").getPath() + "sqlconfig.xml";
             urlFlag = 1;
-            if (url == null) {
-                url = this.getClass().getResource("/resource_Expired/sqlconfig.yml");
+            if (urlname == null) {
+                urlname = this.getClass().getResource("/").getPath() + "sqlconfig.yml";
                 urlFlag = 2;
             }
-            if (url == null) {
-                url = this.getClass().getResource("/resource_Expired/sqlconfig.json");
+            if (urlname == null) {
+                urlname = this.getClass().getResource("/").getPath() + "sqlconfig.json";
                 urlFlag = 3;
             }
         }
-        if (url == null)
+        if (urlname == null)
             return null;
         else {
             // 解析url
-            return parseURL(url, urlFlag);
+            return null;
+            //return parseURL(urlname, urlFlag);
         }
     }
 

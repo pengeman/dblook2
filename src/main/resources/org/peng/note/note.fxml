@@ -8,7 +8,7 @@
     <children>
         <ButtonBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="600.0">
             <buttons>
-                <Button fx:id="b1" mnemonicParsing="false" prefHeight="24.0" prefWidth="81.0" text="Button"/>
+                <Button fx:id="b1" mnemonicParsing="false" prefHeight="24.0" prefWidth="81.0" text="nothinge"/>
                 <Button fx:id="b2" mnemonicParsing="false" text="关闭"/>
             </buttons>
         </ButtonBar>

@@ -24,8 +24,9 @@ public class NoteController implements Initializable {
 // 打开对话框，读取文件内容
         String s = "";
         StringBuffer text = new StringBuffer();
-        String filename = this.getClass().getResource("dblook.txt").getFile();
-        System.out.println(filename);
+        //String filename = this.getClass().getResource("dblook.txt").getFile();
+        String filename = this.getClass().getResource("/").getPath() + "dblook.txt";
+        System.out.println("28-" + filename);
         try {
             File file = new File(filename);
             FileReader read = new FileReader(file);

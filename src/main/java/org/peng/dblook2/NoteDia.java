@@ -26,7 +26,7 @@ public class NoteDia extends javax.swing.JDialog {
         String s = "";
         StringBuffer text = new StringBuffer();
         String filename = this.getClass().getResource("/dblook.txt").getFile();
-        System.out.println(filename);
+        System.out.println("29-" + filename);
         try {
             File file = new File(filename);
             FileReader read = new FileReader(file);
