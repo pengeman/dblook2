@@ -12,6 +12,7 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
         <lombok.version>1.18.20</lombok.version>
     </properties>
 
@@ -28,11 +29,11 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>17</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.openjfx</groupId>-->
+<!--            <artifactId>javafx-controls</artifactId>-->
+<!--            <version>17</version>-->
+<!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
         <dependency>
             <groupId>redis.clients</groupId>
@@ -88,17 +89,17 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>16</version>
+            <version>17.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>16</version>
+            <version>17.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>13</version>
+            <version>17.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
@@ -119,6 +120,7 @@
     </dependencies>
     <build>
         <plugins>
+
             <!--            <plugin>-->
             <!--                <groupId>com.zenjava</groupId>-->
             <!--                <artifactId>javafx-maven-plugin</artifactId>-->
@@ -158,10 +160,22 @@
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.3</version>
-                <configuration>
-                    <mainClass>AppStart</mainClass>
-                </configuration>
+                <version>0.0.8</version>
+                <executions>
+                    <execution>
+                        <!-- Default configuration for running with: mvn clean javafx:run -->
+                        <id>default-cli</id>
+                        <configuration>
+                            <mainClass>org.peng.note.NoteFX</mainClass>
+                            <launcher>app</launcher>
+                            <jlinkZipName>app</jlinkZipName>
+                            <jlinkImageName>app</jlinkImageName>
+                            <noManPages>true</noManPages>
+                            <stripDebug>true</stripDebug>
+                            <noHeaderFiles>true</noHeaderFiles>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <!--            <plugin>-->
